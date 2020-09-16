@@ -11,14 +11,12 @@
     .package(url: "https://github.com/zanoroy/fluent-kit.git", from: 1.7.3.1)
 ```
     
-    <h2>APLHA</h2>
-
-    This is an Alpha release!!
-
-    Added child aggregate property wrapper to use:
-
-    add the poperty to your model:
-
+<h2>APLHA</h2>
+This is an Alpha release!!
+<br>
+Added child aggregate property wrapper to use:
+<br>
+Add the poperty to your model:
 ```swift
 public final class Department: Model,Content {
 
@@ -48,33 +46,33 @@ public final class Department: Model,Content {
 
 }
 ```
-
-    With the current version the "field" parameter must match the var name (in this case 'accountCount') the querybuilder will not include the aggregate properties unless instructed to use them.
-    So the following with return the Department Model with accountCount being nil 
+<br>
+<br>
+With the current version the "field" parameter must match the var name (in this case 'accountCount') the querybuilder will not include the aggregate properties unless instructed to use them.
+So the following with return the Department Model with accountCount being nil 
 ```swift    
 return try Department.query(on: request.db).all()
 ```
-
-    The following call will include the sub-query and populate any AggregateField properties
+<br>
+<br>
+The following call will include the sub-query and populate any AggregateField properties
 ```swift    
 return try Department.query(on: request.db).withchildaggregates()
 ```
-
-
-    <br>
-    <a href="https://docs.vapor.codes/4.0/">
-        <img src="http://img.shields.io/badge/read_the-docs-2196f3.svg" alt="Documentation">
-    </a>
-    <a href="https://discord.gg/vapor">
-        <img src="https://img.shields.io/discord/431917998102675485.svg" alt="Team Chat">
-    </a>
-    <a href="LICENSE">
-        <img src="http://img.shields.io/badge/license-MIT-brightgreen.svg" alt="MIT License">
-    </a>
-    <a href="https://github.com/vapor/fluent-kit/actions">
-        <img src="https://github.com/vapor/fluent-kit/workflows/test/badge.svg" alt="Continuous Integration">
-    </a>
-    <a href="https://swift.org">
-        <img src="http://img.shields.io/badge/swift-5.2-brightgreen.svg" alt="Swift 5.2">
-    </a>
+<br>
+<a href="https://docs.vapor.codes/4.0/">
+    <img src="http://img.shields.io/badge/read_the-docs-2196f3.svg" alt="Documentation">
+</a>
+<a href="https://discord.gg/vapor">
+    <img src="https://img.shields.io/discord/431917998102675485.svg" alt="Team Chat">
+</a>
+<a href="LICENSE">
+    <img src="http://img.shields.io/badge/license-MIT-brightgreen.svg" alt="MIT License">
+</a>
+<a href="https://github.com/vapor/fluent-kit/actions">
+    <img src="https://github.com/vapor/fluent-kit/workflows/test/badge.svg" alt="Continuous Integration">
+</a>
+<a href="https://swift.org">
+    <img src="http://img.shields.io/badge/swift-5.2-brightgreen.svg" alt="Swift 5.2">
+</a>
 </p>
