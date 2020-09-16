@@ -17,45 +17,51 @@ This is an Alpha release!!
 Added child aggregate property wrapper to use:
 <br>
 Add the poperty to your model:
+
 ```swift
-public final class Department: Model,Content {
+    public final class Department: Model,Content {
 
-    public static let schema = "department"
+        public static let schema = "department"
 
-    // 'Unique key for the record.'
-    @ID(custom: "sysid", generatedBy: .database)
-    public var id: Int?
+        // 'Unique key for the record.'
+        @ID(custom: "sysid", generatedBy: .database)
+        public var id: Int?
 
-    // Description for the department.
-    @Field(key: "description")
-    public var description: String
+        // Description for the department.
+        @Field(key: "description")
+        public var description: String
 
-    // Freeform comment.
-    @OptionalField(key: "comment")
-    var comment: String?
+        // Freeform comment.
+        @OptionalField(key: "comment")
+        var comment: String?
 
-    // Accountnumber.
-    @OptionalField(key: "accountnumber")
-    var accountnumber: String?
+        // Accountnumber.
+        @OptionalField(key: "accountnumber")
+        var accountnumber: String?
 
-    ...
+        ...
 
-    @AggregiateField(foreigntable: Account.schema, method: .count, field: "accountCount", local: "accountnumber", childfield: "accountnumber")
-    var accountCount: Int?
-    //  With the current version the "field" parameter must match the var name (in this case 'accountCount')
+        @AggregiateField(foreigntable: Account.schema, method: .count, field: "accountCount", local: "accountnumber", childfield: "accountnumber")
+        var accountCount: Int?
+        //  With the current version the "field" parameter must match the var name (in this case 'accountCount')
 
-}
+    }
+    
 ```
+
 <br>
 <br>
 With the current version the "field" parameter must match the var name (in this case 'accountCount') the querybuilder will not include the aggregate properties unless instructed to use them.
 So the following with return the Department Model with accountCount being nil 
+
 ```swift    
 return try Department.query(on: request.db).all()
 ```
+
 <br>
 <br>
 The following call will include the sub-query and populate any AggregateField properties
+
 ```swift    
 return try Department.query(on: request.db).withchildaggregates()
 ```
