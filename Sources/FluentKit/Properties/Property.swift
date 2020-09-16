@@ -25,6 +25,13 @@ public protocol AnyDatabaseProperty: AnyProperty {
     func output(from output: DatabaseOutput) throws
 }
 
+public protocol AggregateDatabaseProperty: AnyProperty {
+    // var keys: [FieldKey] { get }
+    var aggregates: [DatabaseQuery.ChildAggregateField] { get }
+    func input(to input: DatabaseInput)
+    func output(from output: DatabaseOutput) throws
+}
+
 public protocol AnyCodableProperty: AnyProperty {
     func encode(to encoder: Encoder) throws
     func decode(from decoder: Decoder) throws

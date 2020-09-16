@@ -1,3 +1,20 @@
+public struct SQLQuery: SQLExpression {
+    public let statement: String
+    public var alias: SQLExpression
+  
+    public init(_ statement: String, as alias: SQLExpression) {
+      self.statement = statement
+      self.alias = alias
+    }
+    
+    public func serialize(to serializer: inout SQLSerializer) {
+      serializer.write("\(statement)")
+      serializer.write(" AS ")
+      self.alias.serialize(to: &serializer)
+    }
+}
+
+
 public struct SQLQueryConverter {
     let delegate: SQLConverterDelegate
     public init(delegate: SQLConverterDelegate) {
@@ -73,6 +90,19 @@ public struct SQLQueryConverter {
                         field,
                         as: SQLIdentifier(schema + "_" + self.key(key))
                     )
+                }
+            }
+            select.columns += query.childAggregates.map { childAggregate in
+                switch childAggregate {
+                case .custom(let any):
+                  return custom(any)
+                  
+                case .ChildAggregate(let schema, _, _, let field, _, _):
+                  
+                  return SQLQuery(
+                    childAggregate.description,
+                      as: SQLIdentifier(schema + "_" + field.description)
+                  )
                 }
             }
         case .aggregate(let aggregate):
