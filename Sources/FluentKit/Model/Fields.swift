@@ -50,7 +50,7 @@ extension Fields {
         }
     }
 
-    public static var childAggregates: [DatabaseQuery.ChildAggregateField] {
+    public static var aggregateFields: [DatabaseQuery.AggregateFieldSubquery] {
         self.init().properties.compactMap {
             $0 as? AggregateDatabaseProperty
         }.flatMap {

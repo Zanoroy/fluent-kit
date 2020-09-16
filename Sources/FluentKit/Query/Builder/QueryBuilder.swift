@@ -9,7 +9,7 @@ public final class QueryBuilder<Model>
     public let database: Database
     internal var includeDeleted: Bool
     internal var shouldForceDelete: Bool
-    private var WithChildAggregates: Bool
+    private var WithAggregateSubqueries: Bool
     public var models: [Schema.Type]
     public var eagerLoaders: [AnyEagerLoader]
 
@@ -28,7 +28,7 @@ public final class QueryBuilder<Model>
         eagerLoaders: [AnyEagerLoader] = [],
         includeDeleted: Bool = false,
         shouldForceDelete: Bool = false,
-        withChildAggregates: Bool = false
+        withAggregateSubqueries: Bool = false
     ) {
         self.query = query
         self.database = database
@@ -36,7 +36,7 @@ public final class QueryBuilder<Model>
         self.eagerLoaders = eagerLoaders
         self.includeDeleted = includeDeleted
         self.shouldForceDelete = shouldForceDelete
-        self.WithChildAggregates = withChildAggregates
+        self.WithAggregateSubqueries = withAggregateSubqueries
         // Pass through custom ID key for database if used.
         let idKey = Model()._$id.key
         switch idKey {
@@ -72,8 +72,8 @@ public final class QueryBuilder<Model>
         }
     }
   
-    public func addChildAggregates(for model: (Schema & Fields).Type, to query: inout DatabaseQuery) {
-      query.childAggregates += model.childAggregates.map { path in
+    public func addAggregateFields(for model: (Schema & Fields).Type, to query: inout DatabaseQuery) {
+      query.aggregateFields += model.aggregateFields.map { path in
         path
       }
     }
@@ -195,9 +195,9 @@ public final class QueryBuilder<Model>
             }
         }
     }
-  public func withchildaggregates() -> EventLoopFuture<[Model]> {
+  public func withaggregatesubqueries() -> EventLoopFuture<[Model]> {
       var models: [Result<Model, Error>] = []
-      self.WithChildAggregates = true
+      self.WithAggregateSubqueries = true
       return self.all { model in
           models.append(model)
       }.flatMapThrowing {
@@ -208,6 +208,7 @@ public final class QueryBuilder<Model>
 
     public func all() -> EventLoopFuture<[Model]> {
         var models: [Result<Model, Error>] = []
+        self.WithAggregateSubqueries = false
         return self.all { model in
             models.append(model)
         }.flatMapThrowing {
@@ -275,9 +276,9 @@ public final class QueryBuilder<Model>
       
         // If fields are not being manually selected,
         // add fields from all models being queried.
-        if WithChildAggregates && query.childAggregates.isEmpty {
+        if WithAggregateSubqueries && query.aggregateFields.isEmpty {
             for model in self.models {
-                self.addChildAggregates(for: model, to: &query)
+                self.addAggregateFields(for: model, to: &query)
             }
         }
 

@@ -92,15 +92,15 @@ public struct SQLQueryConverter {
                     )
                 }
             }
-            select.columns += query.childAggregates.map { childAggregate in
-                switch childAggregate {
+            select.columns += query.aggregateFields.map { aggregateField in
+                switch aggregateField {
                 case .custom(let any):
                   return custom(any)
                   
-                case .ChildAggregate(let schema, _, _, let field, _, _):
+                case .AggregateSubquery(let schema, _, _, let field, _, _):
                   
                   return SQLQuery(
-                    childAggregate.description,
+                    aggregateField.description,
                       as: SQLIdentifier(schema + "_" + field.description)
                   )
                 }

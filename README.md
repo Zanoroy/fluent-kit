@@ -63,7 +63,7 @@ return try Department.query(on: request.db).all()
 The following call will include the sub-query and populate any AggregateField properties
 
 ```swift    
-return try Department.query(on: request.db).withchildaggregates()
+return try Department.query(on: request.db).withaggregatesubqueries()
 ```
 <br>
 <a href="https://docs.vapor.codes/4.0/">

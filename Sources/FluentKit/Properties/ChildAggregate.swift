@@ -1,5 +1,5 @@
 //
-//  ChildAggregate.swift
+//  AggregateField.swift
 //
 //
 //  Created by Bruce Quinton on 16/9/20.
@@ -17,7 +17,7 @@ public final class AggregiateFieldProperty<From, WrappedValue>
     where From: FluentKit.Model, WrappedValue: Codable
 {
   public let foregintable: String
-  public let method: DatabaseQuery.ChildAggregateField.Method
+  public let method: DatabaseQuery.AggregateFieldSubquery.Method
   public let field: FieldKey
   public let local: FieldKey
   public let childfield: FieldKey
@@ -44,7 +44,7 @@ public final class AggregiateFieldProperty<From, WrappedValue>
 //  _ foreign: Foreign.Type,
 //  on filter: JoinFilter<Foreign, Local, Value>,
 //  method: DatabaseQuery.Join.Method = .inner
-  public init(foreigntable: String, method: DatabaseQuery.ChildAggregateField.Method, field: FieldKey, local: FieldKey, childfield: FieldKey) {
+  public init(foreigntable: String, method: DatabaseQuery.AggregateFieldSubquery.Method, field: FieldKey, local: FieldKey, childfield: FieldKey) {
     self.foregintable = foreigntable
     self.field = field
     self.local = local
@@ -107,8 +107,8 @@ extension AggregiateFieldProperty: QueryableProperty { }
 
 // MARK: Database
 extension AggregiateFieldProperty: AggregateDatabaseProperty {
-  public var aggregates: [DatabaseQuery.ChildAggregateField] {
-    [DatabaseQuery.ChildAggregateField.ChildAggregate(schema: From.schemaOrAlias, subschema: self.foregintable, method: self.method, field: self.field, foreign: self.childfield, local: self.local)]
+  public var aggregates: [DatabaseQuery.AggregateFieldSubquery] {
+    [DatabaseQuery.AggregateFieldSubquery.AggregateSubquery(schema: From.schemaOrAlias, subschema: self.foregintable, method: self.method, field: self.field, foreign: self.childfield, local: self.local)]
   }
 
     public func input(to input: DatabaseInput) {

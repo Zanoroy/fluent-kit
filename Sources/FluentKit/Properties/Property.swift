@@ -27,7 +27,7 @@ public protocol AnyDatabaseProperty: AnyProperty {
 
 public protocol AggregateDatabaseProperty: AnyProperty {
     // var keys: [FieldKey] { get }
-    var aggregates: [DatabaseQuery.ChildAggregateField] { get }
+    var aggregates: [DatabaseQuery.AggregateFieldSubquery] { get }
     func input(to input: DatabaseInput)
     func output(from output: DatabaseOutput) throws
 }

@@ -1,11 +1,11 @@
 //
-//  DatabaseQuery+ChildAggregate.swift
+//  DatabaseQuery+AggregateFieldSubquery.swift
 //  
 //
 //  Created by Bruce Quinton on 16/9/20.
 //
 extension DatabaseQuery {
-    public enum ChildAggregateField {
+    public enum AggregateFieldSubquery {
       public enum Method {
           case count
           case sum
@@ -15,7 +15,7 @@ extension DatabaseQuery {
           case custom(Any)
       }
       
-      case ChildAggregate(
+      case AggregateSubquery(
           schema: String,
           subschema: String,
           method: Method,
@@ -27,10 +27,10 @@ extension DatabaseQuery {
     }
 }
 
-extension DatabaseQuery.ChildAggregateField: CustomStringConvertible {
+extension DatabaseQuery.AggregateFieldSubquery: CustomStringConvertible {
     public var description: String {
         switch self {
-        case .ChildAggregate(let schema, let subschema, let method, let field, let foreign, let local):
+        case .AggregateSubquery(let schema, let subschema, let method, let field, let foreign, let local):
           //SQLColumn(self.key(key), table: schema)
           let queryMethod: String
 
@@ -51,7 +51,7 @@ extension DatabaseQuery.ChildAggregateField: CustomStringConvertible {
     }
 }
 
-extension DatabaseQuery.ChildAggregateField.Method: CustomStringConvertible {
+extension DatabaseQuery.AggregateFieldSubquery.Method: CustomStringConvertible {
     public var description: String {
         switch self {
         case .count:
