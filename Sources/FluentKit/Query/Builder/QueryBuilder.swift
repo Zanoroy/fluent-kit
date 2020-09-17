@@ -202,20 +202,9 @@ public final class QueryBuilder<Model>
         self.WithAggregateSubqueries = true
         return self
     }
-  
-//    public func withaggregatesubqueries() -> EventLoopFuture<[Model]> {
-//        var models: [Result<Model, Error>] = []
-//        return self.all { model in
-//            models.append(model)
-//        }.flatMapThrowing {
-//            return try models
-//                .map { try $0.get() }
-//        }
-//    }
 
     public func all() -> EventLoopFuture<[Model]> {
         var models: [Result<Model, Error>] = []
-        self.WithAggregateSubqueries = false
         return self.all { model in
             models.append(model)
         }.flatMapThrowing {
