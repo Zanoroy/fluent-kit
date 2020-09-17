@@ -4,16 +4,16 @@
 //
 //  Created by Bruce Quinton on 16/9/20.
 //
-//AggregiateFields (Always optional)
+//AggregateFields (Always optional)
 extension  Model {
-    public typealias AggregiateField<Value> = AggregiateFieldProperty<Self, Value>
+    public typealias AggregateField<Value> = AggregateFieldProperty<Self, Value>
         where Value: Codable
 }
 
 // MARK: Type
 
 @propertyWrapper
-public final class AggregiateFieldProperty<From, WrappedValue>
+public final class AggregateFieldProperty<From, WrappedValue>
     where From: FluentKit.Model, WrappedValue: Codable
 {
   public let foregintable: String
@@ -28,7 +28,7 @@ public final class AggregiateFieldProperty<From, WrappedValue>
 //  var ColumnFieldKey: FieldKey?
 //  public let ParentColumn: ParentColumnKey?
 
-  public var projectedValue: AggregiateFieldProperty<From, WrappedValue> {
+  public var projectedValue: AggregateFieldProperty<From, WrappedValue> {
       self
   }
 
@@ -37,7 +37,7 @@ public final class AggregiateFieldProperty<From, WrappedValue>
       self.value ?? nil
     }
     set {
-      fatalError("AggregiateFieldProperty relation is get-only.")
+      fatalError("AggregateFieldProperty relation is get-only.")
     }
   }
   
@@ -57,9 +57,9 @@ public final class AggregiateFieldProperty<From, WrappedValue>
 
 // MARK: Property
 
-extension AggregiateFieldProperty: AnyProperty { }
+extension AggregateFieldProperty: AnyProperty { }
 
-extension AggregiateFieldProperty: Property {
+extension AggregateFieldProperty: Property {
       public typealias Model = From
       public typealias Value = WrappedValue?
 
@@ -97,16 +97,16 @@ extension AggregiateFieldProperty: Property {
 
 // MARK: Queryable
 
-extension AggregiateFieldProperty: AnyQueryableProperty {
+extension AggregateFieldProperty: AnyQueryableProperty {
     public var path: [FieldKey] {
         []
     }
 }
 
-extension AggregiateFieldProperty: QueryableProperty { }
+extension AggregateFieldProperty: QueryableProperty { }
 
 // MARK: Database
-extension AggregiateFieldProperty: AggregateDatabaseProperty {
+extension AggregateFieldProperty: AggregateDatabaseProperty {
   public var aggregates: [DatabaseQuery.AggregateFieldSubquery] {
     [DatabaseQuery.AggregateFieldSubquery.AggregateSubquery(schema: From.schemaOrAlias, subschema: self.foregintable, method: self.method, field: self.field, foreign: self.childfield, local: self.local)]
   }
@@ -139,7 +139,7 @@ extension AggregiateFieldProperty: AggregateDatabaseProperty {
 
 // MARK: Codable
 
-extension AggregiateFieldProperty: AnyCodableProperty {
+extension AggregateFieldProperty: AnyCodableProperty {
     public func encode(to encoder: Encoder) throws {
         var container = encoder.singleValueContainer()
         try container.encode(self.wrappedValue)

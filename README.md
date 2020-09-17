@@ -8,7 +8,7 @@
     Use the SPM string to easily include the dependendency in your `Package.swift` file.
 
 ```swift
-    .package(url: "https://github.com/zanoroy/fluent-kit.git", from: 1.7.3.3)
+    .package(url: "https://github.com/zanoroy/fluent-kit.git", from: 1.7.3.4)
 ```
     
 <h2>APLHA</h2>
@@ -41,7 +41,7 @@ Add the poperty to your model:
 
         ...
 
-        @AggregiateField(foreigntable: Account.schema, method: .count, field: "accountCount", local: "accountnumber", childfield: "accountnumber")
+        @AggregateField(foreigntable: Account.schema, method: .count, field: "accountCount", local: "accountnumber", childfield: "accountnumber")
         var accountCount: Int?
         //  With the current version the "field" parameter must match the var name (in this case 'accountCount')
 
