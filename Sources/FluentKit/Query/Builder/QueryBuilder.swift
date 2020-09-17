@@ -195,16 +195,23 @@ public final class QueryBuilder<Model>
             }
         }
     }
-  public func withaggregatesubqueries() -> EventLoopFuture<[Model]> {
-      var models: [Result<Model, Error>] = []
-      self.WithAggregateSubqueries = true
-      return self.all { model in
-          models.append(model)
-      }.flatMapThrowing {
-          return try models
-              .map { try $0.get() }
-      }
-  }
+  
+  
+    // MARK: Soft Delete
+    public func withAggregateSubqueries() -> Self {
+        self.WithAggregateSubqueries = true
+        return self
+    }
+  
+//    public func withaggregatesubqueries() -> EventLoopFuture<[Model]> {
+//        var models: [Result<Model, Error>] = []
+//        return self.all { model in
+//            models.append(model)
+//        }.flatMapThrowing {
+//            return try models
+//                .map { try $0.get() }
+//        }
+//    }
 
     public func all() -> EventLoopFuture<[Model]> {
         var models: [Result<Model, Error>] = []

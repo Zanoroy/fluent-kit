@@ -8,7 +8,7 @@
     Use the SPM string to easily include the dependendency in your `Package.swift` file.
 
 ```swift
-    .package(url: "https://github.com/zanoroy/fluent-kit.git", from: 1.7.3.5)
+    .package(url: "https://github.com/zanoroy/fluent-kit.git", from: 1.7.3.6)
 ```
     
 <h2>APLHA</h2>
@@ -63,8 +63,9 @@ return try Department.query(on: request.db).all()
 The following call will include the sub-query and populate any AggregateField properties
 
 ```swift    
-return try Department.query(on: request.db).withaggregatesubqueries()
+return try Department.query(on: request.db).withAggregateSubqueries().all()
 ```
+
 <br>
 <a href="https://docs.vapor.codes/4.0/">
     <img src="http://img.shields.io/badge/read_the-docs-2196f3.svg" alt="Documentation">
