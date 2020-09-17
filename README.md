@@ -8,7 +8,7 @@
     Use the SPM string to easily include the dependendency in your `Package.swift` file.
 
 ```swift
-    .package(url: "https://github.com/zanoroy/fluent-kit.git", from: 1.7.3.4)
+    .package(url: "https://github.com/zanoroy/fluent-kit.git", from: 1.7.3.5)
 ```
     
 <h2>APLHA</h2>
